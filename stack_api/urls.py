@@ -20,14 +20,17 @@ from django.contrib.admin.views import main
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from main.views import ProblemViewSet
+from main.views import ProblemViewSet, ReplyViewSet, CommentViewSet
 
 router = DefaultRouter()
 router.register('problems', ProblemViewSet)
+router.register('replies', ReplyViewSet)
+router.register('comments', CommentViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('v1/api/', include(router.urls)),
+    path('v1/api/account/', include('account.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -38,4 +41,4 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # problems/ -> POST -> Problem.objects.create
 # problems/ -> PUT -> update
 # problems/ -> PATCH -> partial
-# problems/ -> GET -> Problem.objects.all()
+# problems/ -> DELETE -> Problem.objects.all()
